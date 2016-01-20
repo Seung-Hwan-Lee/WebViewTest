@@ -9,17 +9,41 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let webView = UIWebView(frame: CGRectZero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.prepareWebView()
+        
+        self.testTransparentWebView()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func prepareWebView() {
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubview(webView)
+        
+        let viewDic = ["webView":webView]
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[webView]-10-|", options: .AlignAllCenterY, metrics: nil, views: viewDic))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-44-[webView]-44-|", options: .AlignAllCenterX, metrics: nil, views: viewDic))
+    }
 
-
+    func testTransparentWebView() {
+        self.view.backgroundColor = UIColor.yellowColor()
+        
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.opaque = false
+        webView.backgroundColor = UIColor.clearColor()
+        
+        let htmlString = "<body style=\"background-color: transparent;\">hi</body>"
+        webView.loadHTMLString(htmlString, baseURL: nil)
+    }
 }
 
